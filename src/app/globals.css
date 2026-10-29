@@ -150,16 +150,24 @@
   }
   select.field-input option { color: var(--color-ink); background: var(--color-papier); }
 
-  /* Plan zagospodarowania */
+  /* Plan zagospodarowania – obrysy działek na podkładzie rys. A-01 */
   .house { cursor: pointer; }
   .house:focus { outline: none; }
-  .house .ring { fill: var(--color-papier); stroke: var(--color-ink); stroke-width: 2; transition: fill 0.2s, stroke 0.2s; }
-  .house text { font-family: var(--font-mono); font-size: 34px; font-weight: 500; fill: var(--color-ink); pointer-events: none; }
+  .house .lot-area { fill: transparent; stroke: transparent; stroke-width: 12; transition: fill 0.2s, stroke 0.2s; }
+  .house[data-status="dostepny"] .lot-area { fill: rgb(79 122 84 / 0.34); }
+  .house[data-status="zarezerwowany"] .lot-area { fill: rgb(180 137 58 / 0.38); }
+  .house[data-status="sprzedany"] .lot-area { fill: rgb(140 137 129 / 0.5); }
+  .house:hover .lot-area { fill: rgb(28 26 24 / 0.16); stroke: var(--color-smola); }
+  .house:focus-visible .lot-area { stroke: var(--color-cegla); stroke-width: 18; }
+  .house[aria-pressed="true"] .lot-area { fill: rgb(158 85 55 / 0.34); stroke: var(--color-cegla); stroke-width: 16; }
+  .house .ring { fill: var(--color-papier); stroke: var(--color-ink); stroke-width: 7; transition: fill 0.2s, stroke 0.2s; }
+  .house text { font-family: var(--font-mono); font-size: 84px; font-weight: 500; fill: var(--color-ink); pointer-events: none; }
   .house:hover .ring, .house:focus-visible .ring { fill: var(--color-smola); }
   .house:hover text, .house:focus-visible text { fill: var(--color-papier); }
-  .house:focus-visible .ring { stroke: var(--color-cegla); stroke-width: 5; }
   .house[aria-pressed="true"] .ring { fill: var(--color-cegla); stroke: var(--color-cegla); }
   .house[aria-pressed="true"] text { fill: #fff; }
+  .plan-label { font-family: var(--font-mono); font-size: 64px; font-weight: 500; paint-order: stroke; stroke: var(--color-papier); stroke-width: 14px; }
+  .plan-lake { font-family: var(--font-display); font-style: italic; font-size: 104px; fill: var(--color-ton); paint-order: stroke; stroke: var(--color-papier); stroke-width: 14px; }
 
   /* Lightbox i menu mobilne */
   .lightbox::backdrop { background: rgb(16 15 14 / 0.94); }

@@ -54,6 +54,7 @@ Wszystkie dane biznesowe są w **`src/content/site.config.ts`**:
 - `houses` – dla każdego z 16 domów: `status` (`"dostepny" | "zarezerwowany" | "sprzedany"`), `type`, `usableArea`, `plotArea`, `plotNumber`, `price`. Pola `null` wyświetlają się jako „do uzupełnienia”; brak statusu oznacza „status w aktualizacji” (strona nie publikuje fikcyjnej dostępności).
 - `contact` – telefon, e-mail, adres biura. Po uzupełnieniu pojawią się jako klikalne linki.
 - `seller` – nazwa, adres i dane rejestrowe sprzedającego (stopka, polityka prywatności).
+- Obrysy działek na planie i położenie numerów: `src/content/site-plan.ts` (układ współrzędnych obrazu `src/assets/img/plan-zagospodarowania.webp`, czyli rys. A-01 bez sieci uzbrojenia).
 - `investment.coordinates` – po podaniu link „Odkryj lokalizację na mapie” wskaże dokładny punkt, a dane strukturalne otrzymają współrzędne.
 
 Pozostałe miejsca oznaczone w interfejsie przerywanym podkreśleniem (klasa `todo`): sekcja „W okolicy” (`src/components/sections.tsx`), okres przechowywania danych i odbiorcy w polityce prywatności (`src/app/polityka-prywatnosci/page.tsx`).

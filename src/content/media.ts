@@ -15,6 +15,7 @@ import elewacjaFrontowa from "@/assets/img/elewacja-frontowa.webp";
 import elewacjaTylna from "@/assets/img/elewacja-tylna.webp";
 import elewacjaBoczna1 from "@/assets/img/elewacja-boczna-1.webp";
 import elewacjaBoczna2 from "@/assets/img/elewacja-boczna-2.webp";
+import planZagospodarowania from "@/assets/img/plan-zagospodarowania.webp";
 
 export type MediaCategory = "wizualizacje" | "architektura" | "rzuty";
 
@@ -37,6 +38,16 @@ export const images = {
   detalElewacja,
 };
 
+export const planMedia: MediaItem = {
+  id: "plan-zagospodarowania",
+  src: planZagospodarowania,
+  category: "rzuty",
+  drawing: true,
+  span: "big",
+  caption: "Plan zagospodarowania terenu · rys. A-01",
+  alt: "Plan zagospodarowania terenu inwestycji Lake View Prażmowo: podział na 16 działek z numerami, układ budynków, drogi wewnętrzne i teren przy Jeziorze Jagodnym",
+};
+
 export const media: MediaItem[] = [
   { id: "wizualizacja-ogrod", src: wizualizacja, category: "wizualizacje", span: "big", caption: "Dom typu 1a od strony ogrodu · wizualizacja", alt: "Wizualizacja domu typu 1a od strony ogrodu z tarasem, leżakami i wanną ogrodową" },
   { id: "przeszklenie", src: detalPrzeszklenie, category: "wizualizacje", span: "tall", caption: "Przeszklony szczyt salonu · wizualizacja", alt: "Wizualizacja dwukondygnacyjnego przeszklenia szczytu salonu" },
@@ -47,6 +58,7 @@ export const media: MediaItem[] = [
   { id: "elewacja-detal", src: detalElewacja, category: "wizualizacje", caption: "Detal deskowania · wizualizacja", alt: "Wizualizacja detalu ciemnego deskowania elewacji" },
   { id: "widok-4", src: widok4, category: "architektura", drawing: true, caption: "Widok nr 4 · model projektowy", alt: "Model projektowy domu typu 1a od strony wjazdu do garażu" },
   { id: "widok-2", src: widok2, category: "architektura", drawing: true, span: "wide", caption: "Widok nr 2 · model projektowy", alt: "Model projektowy domu typu 1a, widok boczny" },
+  planMedia,
   { id: "rzut-parteru", src: rzutParteru, category: "rzuty", drawing: true, span: "tall", caption: "Rzut parteru · rys. A-03 · 1:100", alt: "Rzut parteru domu typu 1a" },
   { id: "rzut-poddasza", src: rzutPoddasza, category: "rzuty", drawing: true, span: "tall", caption: "Rzut poddasza · rys. A-04 · 1:100", alt: "Rzut poddasza domu typu 1a" },
   { id: "elewacja-frontowa", src: elewacjaFrontowa, category: "architektura", drawing: true, span: "wide", caption: "Elewacja frontowa · rys. A-05 · 1:100", alt: "Elewacja frontowa domu typu 1a" },
@@ -77,5 +89,5 @@ export const galleryFilters: { value: MediaCategory | "all"; label: string }[] =
   { value: "all", label: "Wszystkie" },
   { value: "wizualizacje", label: "Wizualizacje" },
   { value: "architektura", label: "Architektura" },
-  { value: "rzuty", label: "Rzuty" },
+  { value: "rzuty", label: "Plan i rzuty" },
 ];
