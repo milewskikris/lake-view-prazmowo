@@ -31,8 +31,8 @@ function SitePlan({ selected, onSelect }: { selected: number; onSelect: (nr: num
         <path d={`M0 0H${W}V${H}H0Z M${investmentOutline}Z`} fillRule="evenodd" fill="#f7f6f2" opacity=".7" />
         <polygon points={investmentOutline} fill="none" stroke="#1c1a18" strokeWidth="12" />
         {/* Teren przy jeziorze */}
-        <polygon points={beachArea} fill="#9e5537" fillOpacity=".14" stroke="#9e5537" strokeWidth="10" strokeDasharray="40 24" />
-        <text x="3080" y="3700" textAnchor="middle" className="plan-label" fill="#9e5537">
+        <polygon points={beachArea} fill="#a8865a" fillOpacity=".16" stroke="#8a6d43" strokeWidth="10" strokeDasharray="40 24" />
+        <text x="3080" y="3700" textAnchor="middle" className="plan-label" fill="#8a6d43">
           <tspan x="3080">teren przy jeziorze</tspan>
           <tspan x="3080" dy="84">plaża dla mieszkańców</tspan>
         </text>
@@ -82,7 +82,7 @@ function HouseCard({ house }: { house: House }) {
   const nr = String(house.nr);
   return (
     <>
-      <dl className="grid border-t border-jasny/20">
+      <dl className="grid border-t border-jasny/12">
         <Row label="Status">
           {house.status ? (
             <span className="inline-flex items-center gap-2">
@@ -112,7 +112,7 @@ function HouseCard({ house }: { house: House }) {
         <a href="#kontakt" className="btn btn-light" onClick={() => askAbout(nr)}>
           Zapytaj o dom nr {house.nr} <span className="arrow" aria-hidden="true">→</span>
         </a>
-        <a href="#dom-1a" className="text-link">
+        <a href="#architektura" className="text-link text-mosiadz">
           Rzut i karta typu 1a
         </a>
       </div>
@@ -122,8 +122,8 @@ function HouseCard({ house }: { house: House }) {
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-[9em_minmax(0,1fr)] gap-3 border-b border-jasny/20 py-2.5 text-sm">
-      <dt className="pt-0.5 font-mono text-xs tracking-[0.08em] text-jasny-2 uppercase">{label}</dt>
+    <div className="grid grid-cols-[9.5em_minmax(0,1fr)] gap-3 border-b border-jasny/12 py-3 text-[0.92rem] font-light">
+      <dt className="pt-0.5 text-[0.62rem] font-medium tracking-[0.22em] text-mosiadz uppercase">{label}</dt>
       <dd>{children}</dd>
     </div>
   );
@@ -155,27 +155,29 @@ export function Houses() {
   }, []);
 
   return (
-    <section id="domy" aria-labelledby="domy-h" className="band">
+    <section id="domy" aria-labelledby="domy-h" className="band light">
       <div className="wrap">
-        <div className="mb-[clamp(36px,5vw,64px)] grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] md:items-end md:gap-12">
-          <span className="eyebrow">Dostępne domy</span>
-          <div className="grid gap-4">
-            <h2 id="domy-h" className="text-h2">
-              Wybierz dom na planie.
+        <div className="mb-[clamp(48px,6vw,88px)] grid gap-8 lg:grid-cols-12 lg:items-end" data-reveal>
+          <div className="lg:col-span-6">
+            <span className="eyebrow">Dostępne domy</span>
+            <h2 id="domy-h" className="display h-xl mt-8">
+              Wybierz <span className="serif-accent text-cegla">swój dom</span> na planie
             </h2>
+          </div>
+          <div className="grid gap-4 lg:col-span-5 lg:col-start-8">
             <p className="lead">Kliknij numer domu na planie zagospodarowania albo wybierz go z listy. W karcie domu sprawdzisz jego dane i wyślesz zapytanie.</p>
           </div>
         </div>
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(320px,1fr)] lg:items-start lg:gap-10">
-          <div className="min-w-0 border border-kreska bg-papier">
+        <div className="grid lg:grid-cols-[minmax(0,1.55fr)_minmax(340px,1fr)] lg:items-stretch">
+          <div className="min-w-0 border border-kreska bg-papier" data-reveal>
             <SitePlan selected={selected} onSelect={select} />
-            <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-1 border-t border-kreska px-4 py-1">
+            <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-1 border-t border-kreska px-5 py-1.5">
               <p className="note">Rys. A-01 · plan zagospodarowania terenu · bez sieci uzbrojenia</p>
-              <button type="button" className="text-link" onClick={(e) => lightbox.open([planMedia], 0, e.currentTarget)}>
+              <button type="button" className="text-link text-cegla" onClick={(e) => lightbox.open([planMedia], 0, e.currentTarget)}>
                 Powiększ plan <span aria-hidden="true">↗</span>
               </button>
             </div>
-            <ul aria-label="Legenda statusów" className="flex flex-wrap gap-x-5 gap-y-2 border-t border-kreska px-4 py-3.5 text-xs text-ink-2">
+            <ul aria-label="Legenda statusów" className="flex flex-wrap gap-x-6 gap-y-2 border-t border-kreska px-5 py-4 text-[0.66rem] font-medium tracking-[0.16em] text-ink-2 uppercase">
               {(Object.keys(statusLabels) as HouseStatus[]).map((s) => (
                 <li key={s} className="inline-flex items-center gap-2">
                   <i className="inline-block size-3.5 border border-ink" style={{ background: STATUS_COLOR[s] }} aria-hidden="true" />
@@ -188,10 +190,10 @@ export function Houses() {
               </li>
             </ul>
           </div>
-          <aside aria-labelledby="hp-title" className="on-dark lg:sticky lg:top-[calc(64px+env(safe-area-inset-top,0px)+16px)] grid gap-5 bg-smola p-[clamp(22px,3vw,34px)] text-jasny">
+          <aside aria-labelledby="hp-title" className="on-dark grid content-start gap-7 bg-smola p-[clamp(26px,3.5vw,48px)] text-jasny">
             <div className="grid gap-1.5" aria-live="polite">
               <span className="eyebrow">Karta domu</span>
-              <h3 id="hp-title" className="text-[clamp(2rem,3.6vw,3rem)] leading-none">
+              <h3 id="hp-title" className="mt-3 text-[clamp(2.2rem,3.8vw,3.4rem)] leading-none font-light tracking-[0.08em] uppercase">
                 Dom nr {house.nr}
               </h3>
             </div>
@@ -211,7 +213,7 @@ export function Houses() {
                       aria-pressed={selected === h.nr}
                       aria-label={`Dom nr ${h.nr}`}
                       onClick={() => select(h.nr)}
-                      className="min-h-11 cursor-pointer border border-jasny/30 font-mono text-sm font-medium transition-colors hover:bg-jasny/10 aria-pressed:bg-jasny aria-pressed:text-smola"
+                      className="min-h-11 cursor-pointer border border-jasny/20 text-sm font-normal transition-colors hover:border-mosiadz hover:text-mosiadz aria-pressed:border-mosiadz aria-pressed:bg-mosiadz aria-pressed:text-smola"
                     >
                       {h.nr}
                     </button>
@@ -219,7 +221,7 @@ export function Houses() {
               </div>
             </div>
             {houses.every((h) => h.status === null) && (
-              <p className="border-l-2 border-cegla pl-2.5 font-mono text-[0.68rem] leading-normal tracking-[0.06em] text-jasny-2">
+              <p className="border-l border-mosiadz pl-4 text-[0.78rem] leading-relaxed font-light text-jasny-2">
                 Aktualne statusy dostępności zostaną opublikowane po potwierdzeniu przez biuro sprzedaży. Do tego czasu każdy dom ma oznaczenie „status w aktualizacji”.
               </p>
             )}

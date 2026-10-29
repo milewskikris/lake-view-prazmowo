@@ -1,21 +1,21 @@
 export function LogoMark({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={className} fill="none" stroke="currentColor">
-      <path d="M4 18 16 6l12 12" strokeWidth="1.4" />
-      <path d="M9 14v6M23 14v6" strokeWidth="1.4" />
-      <path d="M3 24c3-1.6 5-1.6 8 0s5 1.6 8 0 5-1.6 8 0" strokeWidth="1.2" />
-      <path d="M3 28c3-1.6 5-1.6 8 0s5 1.6 8 0 5-1.6 8 0" strokeWidth="1.2" opacity=".6" />
+    <svg viewBox="0 0 40 40" aria-hidden="true" className={className} fill="none" stroke="currentColor">
+      <path d="M6 21 20 8l14 13" strokeWidth="1.3" />
+      <path d="M11.5 16.5V24M28.5 16.5V24" strokeWidth="1.3" />
+      <path d="M4 29c4-2 6.5-2 10.5 0s6.5 2 10.5 0 6.5-2 11 0" strokeWidth="1.1" />
+      <path d="M4 34c4-2 6.5-2 10.5 0s6.5 2 10.5 0 6.5-2 11 0" strokeWidth="1.1" opacity=".55" />
     </svg>
   );
 }
 
-export function Wordmark() {
+export function Wordmark({ compact = false }: { compact?: boolean }) {
   return (
-    <span className="flex items-center gap-3">
-      <LogoMark className="size-[30px] flex-none" />
-      <span className="font-display text-[1.2rem] leading-none tracking-[0.02em]">
-        Lake View
-        <small className="mt-[3px] block font-mono text-[0.62rem] tracking-[0.2em] uppercase opacity-75">Prażmowo · Mazury</small>
+    <span className="flex items-center gap-3.5">
+      <LogoMark className={`flex-none ${compact ? "size-8" : "size-10"}`} />
+      <span className="leading-none">
+        <span className="block text-[0.95rem] font-normal tracking-[0.3em] whitespace-nowrap uppercase sm:tracking-[0.42em]">Lake View</span>
+        <span className="mt-1.5 block text-[0.58rem] font-medium tracking-[0.3em] whitespace-nowrap uppercase opacity-70 sm:tracking-[0.5em]">Prażmowo · Mazury</span>
       </span>
     </span>
   );

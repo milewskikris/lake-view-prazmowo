@@ -24,10 +24,10 @@ export default function PrivacyPolicy() {
           </Link>
         </div>
       </header>
-      <main id="tresc" className="band">
+      <main id="tresc" className="band light">
         <article className="wrap grid max-w-[760px] gap-5 [&_h2]:mt-6 [&_h2]:font-sans [&_h2]:text-base [&_h2]:font-semibold [&_p]:max-w-[65ch]">
           <span className="eyebrow">Dokument</span>
-          <h1 className="text-h2">Polityka prywatności</h1>
+          <h1 className="display h-l">Polityka prywatności</h1>
           <p className="note border-l-2 border-cegla pl-3">Szablon do uzupełnienia przez sprzedającego i weryfikacji prawnej przed publikacją strony.</p>
 
           <h2>Administrator danych</h2>

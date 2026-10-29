@@ -1,10 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource/libre-caslon-display/400.css";
-import "@fontsource/hanken-grotesk/400.css";
-import "@fontsource/hanken-grotesk/500.css";
-import "@fontsource/hanken-grotesk/600.css";
-import "@fontsource/ibm-plex-mono/400.css";
-import "@fontsource/ibm-plex-mono/500.css";
+import "@fontsource/jost/300.css";
+import "@fontsource/jost/400.css";
+import "@fontsource/jost/500.css";
+import "@fontsource/cormorant-garamond/400-italic.css";
 import "./globals.css";
 import { getSiteUrl, isIndexable, SITE_DESCRIPTION } from "@/lib/site";
 
@@ -35,8 +33,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1c1a18",
-  colorScheme: "light",
+  themeColor: "#141413",
+  colorScheme: "dark",
   viewportFit: "cover",
 };
 
@@ -46,7 +44,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <a
           href="#tresc"
-          className="sr-only z-[100] bg-smola px-4 py-3 text-jasny focus:not-sr-only focus:fixed focus:top-[max(8px,env(safe-area-inset-top,0px))] focus:left-2"
+          className="sr-only z-[100] bg-jasny px-4 py-3 text-smola focus:not-sr-only focus:fixed focus:top-[max(8px,env(safe-area-inset-top,0px))] focus:left-2"
         >
           Przejdź do treści
         </a>
