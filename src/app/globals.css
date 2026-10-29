@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+/* Układ: „arkusz projektowy” — asymetryczna siatka magazynu architektonicznego,
+   pasy lnianego papieru przeplatane pasami smołowanego drewna (materiał elewacji domu typu 1a),
+   adnotacje w stylu rysunku technicznego. */
+@theme {
+  --color-len: #ecebe3;
+  --color-papier: #f7f6f2;
+  --color-smola: #1c1a18;
+  --color-ton: #22303a;
+  --color-mech: #4f5f4c;
+  --color-cegla: #9e5537;
+  --color-cegla-jasna: #f0a688;
+  --color-ink: #1c1a18;
+  --color-ink-2: #55534c;
+  --color-kreska: #c9c5ba;
+  --color-jasny: #ecebe3;
+  --color-jasny-2: #b3b1a9;
+  --color-st-dostepny: #4f7a54;
+  --color-st-rezerwacja: #b4893a;
+  --color-st-sprzedany: #8c8981;
+
+  --font-display: "Libre Caslon Display", "Bodoni 72", Didot, Georgia, serif;
+  --font-sans: "Hanken Grotesk", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --text-display: clamp(2.6rem, 7vw, 6rem);
+  --text-display--line-height: 1.02;
+  --text-h2: clamp(2rem, 4.6vw, 3.6rem);
+  --text-h2--line-height: 1.04;
+
+  --animate-rise: rise 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-settle: settle 2.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes rise {
+    from { transform: translateY(22px); opacity: 0.01; }
+    to { transform: none; opacity: 1; }
+  }
+  @keyframes settle {
+    from { transform: scale(1.06); }
+    to { transform: scale(1); }
+  }
+}
+
+@layer base {
+  :root {
+    --head-h: 64px;
+    color-scheme: light;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-len);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  section[id] { scroll-margin-top: var(--head-h); }
+  :focus-visible { outline: 2px solid var(--color-cegla); outline-offset: 3px; }
+  ::selection { background: var(--color-smola); color: var(--color-len); }
+  dialog { max-width: none; max-height: none; padding: 0; border: 0; }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 1320px;
+    margin-inline: auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  @media (min-width: 768px) {
+    .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); }
+  }
+  .band { padding-block: clamp(72px, 11vw, 150px); }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-2);
+  }
+  .on-dark .eyebrow { color: var(--color-jasny-2); }
+  .lead { font-size: clamp(1.05rem, 1.5vw, 1.25rem); max-width: 36em; color: var(--color-ink-2); }
+  .on-dark .lead { color: var(--color-jasny-2); }
+  .note { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.55; color: var(--color-ink-2); }
+  .on-dark .note { color: var(--color-jasny-2); }
+  .figcap { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.04em; color: var(--color-ink-2); }
+  .todo { font-family: var(--font-mono); font-size: 0.85em; color: var(--color-ink-2); border-bottom: 1px dashed currentColor; }
+  .on-dark .todo { color: var(--color-jasny-2); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.6em;
+    min-height: 48px; padding: 0 1.4em;
+    font-family: var(--font-sans); font-weight: 500; font-size: 0.875rem; letter-spacing: 0.04em; line-height: 1;
+    text-decoration: none; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer;
+    transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+  }
+  .btn:disabled { opacity: 0.6; cursor: progress; }
+  .btn-light { background: var(--color-jasny); color: var(--color-smola); border-color: var(--color-jasny); }
+  .btn-light:hover { background: var(--color-papier); }
+  .btn-dark { background: var(--color-smola); color: var(--color-jasny); border-color: var(--color-smola); }
+  .btn-dark:hover { background: var(--color-ton); border-color: var(--color-ton); }
+  .btn-ghost:hover { background: rgb(236 235 227 / 0.12); }
+
+  .text-link {
+    display: inline-flex; align-items: center; gap: 0.5em; min-height: 44px;
+    font-weight: 500; font-size: 0.875rem; letter-spacing: 0.04em; line-height: 1.4;
+    text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px;
+    background: none; color: inherit; cursor: pointer;
+  }
+  .text-link:hover { color: var(--color-cegla); }
+  .on-dark .text-link:hover { color: #fff; }
+  .arrow { display: inline-block; transition: transform 0.25s; }
+  .btn:hover .arrow, .text-link:hover .arrow { transform: translateX(4px); }
+
+  .icon-btn {
+    min-width: 48px; min-height: 48px; display: inline-grid; place-items: center;
+    background: rgb(236 235 227 / 0.08); border: 1px solid rgb(236 235 227 / 0.28); color: var(--color-jasny);
+    cursor: pointer; font-size: 1.3rem; line-height: 1;
+  }
+  .icon-btn:hover { background: rgb(236 235 227 / 0.18); }
+
+  /* Pola formularza na ciemnym tle */
+  .field-label { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-jasny-2); }
+  .field-input {
+    width: 100%; font: 400 1rem var(--font-sans); color: var(--color-jasny);
+    background: transparent; border: 0; border-bottom: 1px solid rgb(236 235 227 / 0.38);
+    padding: 10px 0; border-radius: 0; min-height: 46px; appearance: none;
+  }
+  .field-input:focus { outline: none; border-bottom-color: var(--color-jasny); }
+  .field-input:focus-visible { outline: 2px solid var(--color-cegla); outline-offset: 4px; }
+  .field-input[aria-invalid="true"] { border-bottom-color: var(--color-cegla-jasna); }
+  select.field-input {
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: calc(100% - 12px) 55%, calc(100% - 7px) 55%;
+    background-size: 5px 5px; background-repeat: no-repeat; padding-right: 28px;
+  }
+  select.field-input option { color: var(--color-ink); background: var(--color-papier); }
+
+  /* Plan zagospodarowania */
+  .house { cursor: pointer; }
+  .house:focus { outline: none; }
+  .house .ring { fill: var(--color-papier); stroke: var(--color-ink); stroke-width: 2; transition: fill 0.2s, stroke 0.2s; }
+  .house text { font-family: var(--font-mono); font-size: 34px; font-weight: 500; fill: var(--color-ink); pointer-events: none; }
+  .house:hover .ring, .house:focus-visible .ring { fill: var(--color-smola); }
+  .house:hover text, .house:focus-visible text { fill: var(--color-papier); }
+  .house:focus-visible .ring { stroke: var(--color-cegla); stroke-width: 5; }
+  .house[aria-pressed="true"] .ring { fill: var(--color-cegla); stroke: var(--color-cegla); }
+  .house[aria-pressed="true"] text { fill: #fff; }
+
+  /* Lightbox i menu mobilne */
+  .lightbox::backdrop { background: rgb(16 15 14 / 0.94); }
+  .mnav::backdrop { background: rgb(16 15 14 / 0.5); }
+  .sheet-dialog::backdrop { background: rgb(16 15 14 / 0.6); }
+}
+
+@utility scroll-cue-line {
+  animation: cue 2.4s ease-in-out infinite;
+  transform-origin: top;
+}
+@keyframes cue {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
