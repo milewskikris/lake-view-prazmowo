@@ -16,6 +16,9 @@ import elewacjaTylna from "@/assets/img/elewacja-tylna.webp";
 import elewacjaBoczna1 from "@/assets/img/elewacja-boczna-1.webp";
 import elewacjaBoczna2 from "@/assets/img/elewacja-boczna-2.webp";
 import planZagospodarowania from "@/assets/img/plan-zagospodarowania.webp";
+import detalPlanDomy from "@/assets/img/detal-plan-domy.webp";
+import detalPlanBrzeg from "@/assets/img/detal-plan-brzeg.webp";
+import planNoc from "@/assets/img/plan-noc.webp";
 
 export type MediaCategory = "wizualizacje" | "architektura" | "rzuty";
 
@@ -36,6 +39,10 @@ export const images = {
   detalLezaki,
   detalTaras,
   detalElewacja,
+  /** Fragmenty rys. A-01 w wersji nocnej (jasna kreska na ciemnym tle) – grafiki sekcji atutów i lokalizacji. */
+  detalPlanDomy,
+  detalPlanBrzeg,
+  planNoc,
 };
 
 export const planMedia: MediaItem = {
