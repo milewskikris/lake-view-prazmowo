@@ -3,7 +3,8 @@ import type { ReactNode } from "react";
 import { images } from "@/content/media";
 import { contact, investment, seller } from "@/content/site.config";
 import { m2, totals } from "@/content/rooms";
-import { investmentOutline, PLAN_SIZE } from "@/content/site-plan";
+import { LogoMark } from "./logo";
+import { WaterCanvas } from "./water-canvas";
 
 export const Arrow = ({ dir = "→" }: { dir?: string }) => (
   <span className="arrow" aria-hidden="true">
@@ -14,6 +15,75 @@ export const Arrow = ({ dir = "→" }: { dir?: string }) => (
 export function Todo({ children }: { children: ReactNode }) {
   return <span className="todo">{children}</span>;
 }
+
+/* Ikony liniowe – jedna grubość kreski w całym serwisie */
+export function Icon({ name, className = "size-10" }: { name: keyof typeof ICONS; className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" className={`fill-none stroke-current stroke-[1.15] ${className}`}>
+      {ICONS[name]}
+    </svg>
+  );
+}
+const ICONS = {
+  houses: (
+    <>
+      <path d="M4 24 13 16l9 8v16H4z" />
+      <path d="M26 24l9-8 9 8v16H26z" />
+      <path d="M2 44h44" />
+    </>
+  ),
+  lake: (
+    <>
+      <path d="M3 20c5-3.5 9-3.5 14 0s9 3.5 14 0 9-3.5 14 0" />
+      <path d="M3 28c5-3.5 9-3.5 14 0s9 3.5 14 0 9-3.5 14 0" />
+      <path d="M3 36c5-3.5 9-3.5 14 0s9 3.5 14 0 9-3.5 14 0" />
+    </>
+  ),
+  pier: (
+    <>
+      <path d="M4 22h34M4 26h34" />
+      <path d="M10 26v12M21 26v12M32 26v12" />
+      <path d="M2 40c4-2 7-2 11 0s7 2 11 0 7-2 11 0 7 2 11 0" />
+    </>
+  ),
+  parking: (
+    <>
+      <rect x="7" y="7" width="34" height="34" />
+      <path d="M19 34V14h7.5a5.5 5.5 0 0 1 0 11H19" />
+    </>
+  ),
+  area: (
+    <>
+      <path d="M6 42V6h36v36z" />
+      <path d="M6 22h14v20M20 6v8M30 22h12" />
+    </>
+  ),
+  garage: (
+    <>
+      <path d="M4 20 24 6l20 14v22H4z" />
+      <path d="M12 42V26h24v16M12 31h24M12 36h24" />
+    </>
+  ),
+  spa: (
+    <>
+      <path d="M6 26h36v6a10 10 0 0 1-10 10H16A10 10 0 0 1 6 32z" />
+      <path d="M17 20c-2-3 2-5 0-9M24 20c-2-3 2-5 0-9M31 20c-2-3 2-5 0-9" />
+    </>
+  ),
+  fireplace: (
+    <>
+      <path d="M6 42V12h36v30" />
+      <path d="M2 12h44M14 42V22h20v20" />
+      <path d="M24 38c-4 0-5-3-3-6 1 2 3 1 2-2 3 2 5 5 4 7-.5.7-1.5 1-3 1z" />
+    </>
+  ),
+  pin: (
+    <>
+      <path d="M24 44s14-13 14-24a14 14 0 0 0-28 0c0 11 14 24 14 24z" />
+      <circle cx="24" cy="20" r="5" />
+    </>
+  ),
+} as const;
 
 /* =========================== 1. HERO =========================== */
 const HERO_FACTS = [
@@ -39,6 +109,7 @@ export function Hero() {
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(14_14_13/0.72)_0%,rgb(14_14_13/0.38)_35%,rgb(14_14_13/0.45)_62%,rgb(14_14_13/0.92)_100%)]" />
 
       <div className="wrap flex flex-1 flex-col items-center justify-center pt-[140px] pb-16 text-center">
+        <LogoMark className="mb-8 size-14 animate-rise text-mosiadz" />
         <p className="eyebrow animate-rise text-jasny! [animation-delay:120ms] before:hidden">Prażmowo · Jezioro Jagodne · Mazury</p>
         <h1 id="hero-h" className="display mt-7 max-w-[18ch] animate-rise text-[clamp(2.3rem,6.6vw,5.6rem)] leading-[1.08] [animation-delay:240ms]">
           Twoje miejsce. Twój rytm. <span className="serif-accent text-mosiadz">Mazury.</span>
@@ -130,24 +201,22 @@ export function Vision() {
 }
 
 /* =========================== 3. DOM TYPU 1A – blok projektu =========================== */
-const HOUSE_SPEC: [string, string][] = [
-  ["Powierzchnia użytkowa", m2(totals.total)],
-  ["Parter", m2(totals.ground)],
-  ["Poddasze", m2(totals.attic)],
-  ["Strefa dzienna", "Salon z kominkiem, kuchnia"],
-  ["Pokoje", "Sypialnia z garderobą i 3 pokoje"],
-  ["Strefa spa", "Sauna, jacuzzi"],
-  ["Garaż", m2(totals.garage)],
+const HOUSE_FACTS = [
+  { icon: "area" as const, value: m2(totals.total), label: "Powierzchnia użytkowa" },
+  { icon: "fireplace" as const, value: "Salon z kominkiem", label: "+ 4 pokoje" },
+  { icon: "spa" as const, value: "Sauna i jacuzzi", label: "Strefa spa w domu" },
+  { icon: "garage" as const, value: "Garaż", label: m2(totals.garage) },
 ];
 
 export function FeaturedHouse() {
   return (
     <section id="dom" aria-labelledby="dom-h" className="relative bg-grafit">
       <div className="grid lg:grid-cols-12">
-        <div className="relative min-h-[62vw] lg:col-span-7 lg:min-h-[92vh]" data-reveal="img">
-          <div className="absolute inset-0">
-            <Image src={images.wizualizacja} alt="Wizualizacja domu typu 1a w ogrodzie" fill sizes="(min-width: 1024px) 58vw, 100vw" placeholder="blur" className="object-cover object-[64%_50%]" />
-          </div>
+        <div className="relative min-h-[62vw] lg:col-span-7 lg:min-h-[86vh]" data-reveal="img">
+          <Image src={images.wizualizacja} alt="Wizualizacja domu typu 1a w ogrodzie" fill sizes="(min-width: 1024px) 58vw, 100vw" placeholder="blur" className="object-cover object-[64%_50%]" />
+          <span className="absolute top-6 left-[max(20px,env(safe-area-inset-left,0px))] bg-smola/70 px-3 py-2 text-[0.62rem] font-medium tracking-[0.24em] uppercase backdrop-blur-sm md:left-12">
+            Wizualizacja
+          </span>
         </div>
         <div className="flex flex-col justify-center px-[max(20px,env(safe-area-inset-left,0px))] py-[clamp(64px,8vw,120px)] md:px-12 lg:col-span-5 xl:px-20">
           <div data-reveal>
@@ -155,24 +224,25 @@ export function FeaturedHouse() {
             <h2 id="dom-h" className="display h-xl mt-7">
               Dom <span className="serif-accent text-mosiadz">typu</span> 1a
             </h2>
-            <p className="mt-4 text-[0.68rem] font-medium tracking-[0.28em] text-jasny-2 uppercase">
-              {investment.locality} · gmina {investment.commune}
+            <p className="mt-5 flex items-center gap-2.5 text-[0.72rem] font-medium tracking-[0.24em] text-jasny-2 uppercase">
+              <Icon name="pin" className="size-5 text-mosiadz" /> {investment.locality}, gmina {investment.commune}
             </p>
             <p className="lead mt-7">
               Dwie dwuspadowe bryły połączone łącznikiem. Ceglane ściany zestawione z ciemnym drewnem, salon otwarty na ogród wysokim przeszkleniem szczytu.
             </p>
           </div>
-          <dl className="mt-11 border-t border-jasny/15" data-reveal>
-            {HOUSE_SPEC.map(([k, v], i) => (
-              <div key={k} className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-6 border-b border-jasny/15 py-3.5">
-                <dt className="text-[0.66rem] font-medium tracking-[0.24em] text-jasny-2 uppercase">{k}</dt>
-                <dd className={`text-right font-light ${i === 0 ? "text-[1.5rem] tracking-[0.04em] text-mosiadz" : "text-[0.98rem]"}`}>{v}</dd>
-              </div>
+          <ul className="mt-12 grid grid-cols-2 gap-x-6 gap-y-9 border-t border-jasny/12 pt-10" data-reveal>
+            {HOUSE_FACTS.map((f) => (
+              <li key={f.value} className="grid gap-3">
+                <Icon name={f.icon} className="size-11 text-mosiadz" />
+                <span className="text-[1.05rem] font-normal tracking-[0.04em]">{f.value}</span>
+                <span className="text-[0.64rem] font-medium tracking-[0.22em] text-jasny-2 uppercase">{f.label}</span>
+              </li>
             ))}
-          </dl>
-          <div className="mt-11 flex flex-wrap gap-4" data-reveal>
+          </ul>
+          <div className="mt-12 flex flex-wrap gap-4" data-reveal>
             <a href="#architektura" className="btn btn-accent">
-              Rzuty i elewacje <Arrow />
+              Sprawdź rzuty <Arrow />
             </a>
             <a href="#galeria" className="btn btn-ghost">
               Galeria
@@ -186,50 +256,34 @@ export function FeaturedHouse() {
 
 /* =========================== 4. ATUTY – blok na fotografii =========================== */
 const FEATURES = [
-  { title: "16 domów", text: "Kameralny charakter inwestycji i ograniczona liczba budynków na całym terenie." },
-  { title: "Bliskość jeziora", text: "Wspólny dostęp mieszkańców do linii brzegowej Jeziora Jagodnego." },
-  { title: "Pomost dla każdego domu", text: "Dostęp do pomostu przypisany do każdego domu, zgodnie z warunkami inwestycji." },
-  { title: "Prywatne miejsce postojowe", text: "Jedno miejsce postojowe przypisane do każdego domu." },
+  { icon: "houses" as const, title: "16 domów", text: "Kameralny charakter inwestycji i ograniczona liczba budynków." },
+  { icon: "lake" as const, title: "Bliskość jeziora", text: "Wspólny dostęp mieszkańców do linii brzegowej Jeziora Jagodnego." },
+  { icon: "pier" as const, title: "Pomost dla każdego domu", text: "Dostęp do pomostu przypisany do każdego domu, zgodnie z warunkami inwestycji." },
+  { icon: "parking" as const, title: "Prywatne miejsce postojowe", text: "Jedno miejsce postojowe przypisane do każdego domu." },
 ];
 
 export function Features() {
   return (
-    <section id="atuty" aria-labelledby="atuty-h" className="band relative overflow-hidden bg-smola">
-      <div className="wrap grid gap-16 lg:grid-cols-12 lg:gap-8">
-        <div className="relative lg:col-span-7">
-          <figure data-reveal="img">
-            <figcaption className="figcap mb-4 flex justify-between gap-4">
-              <span>Działki 7–12</span>
-              <span>Rys. A-01 · fragment</span>
-            </figcaption>
-            <div className="relative aspect-[1600/1152] overflow-hidden">
-              <Image src={images.detalPlanDomy} alt="Fragment planu zagospodarowania: działki 7–12 z domami, ogrodami i drogą wewnętrzną" fill sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover" />
-            </div>
-          </figure>
-          <figure className="relative z-10 -mt-[16%] mr-[4%] ml-auto w-[56%] sm:w-[44%]" data-reveal="img">
-            <div className="relative aspect-[1200/1162] overflow-hidden border-[10px] border-smola">
-              <Image src={images.detalPlanBrzeg} alt="Fragment planu zagospodarowania: działki 15 i 16 oraz teren przy Jeziorze Jagodnym" fill sizes="(min-width: 1024px) 26vw, 50vw" className="object-cover" />
-            </div>
-            <figcaption className="figcap mt-3 pl-2.5">Teren przy jeziorze · plaża dla mieszkańców</figcaption>
-          </figure>
+    <section id="atuty" aria-labelledby="atuty-h" className="relative isolate overflow-hidden py-[clamp(96px,13vw,200px)] text-jasny">
+      <Image src={images.detalTaras} alt="" fill sizes="100vw" placeholder="blur" className="-z-10 object-cover" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-smola/82" />
+      <div className="wrap">
+        <div className="mx-auto max-w-3xl text-center" data-reveal>
+          <span className="eyebrow before:hidden">Najważniejsze atuty</span>
+          <h2 id="atuty-h" className="display h-l mt-7">
+            Cztery rzeczy, <span className="serif-accent text-mosiadz">które definiują</span> to miejsce
+          </h2>
         </div>
-        <div className="flex flex-col justify-center lg:col-span-4 lg:col-start-9">
-          <div data-reveal>
-            <span className="eyebrow">Najważniejsze atuty</span>
-            <h2 id="atuty-h" className="display h-l mt-8">
-              Cztery rzeczy, <span className="serif-accent text-mosiadz">które definiują</span> to miejsce
-            </h2>
-          </div>
-          <ul className="mt-12 border-t border-jasny/15" data-reveal>
-            {FEATURES.map((f) => (
-              <li key={f.title} className="group border-b border-jasny/15 py-6">
-                <h3 className="text-[1.05rem] font-normal tracking-[0.18em] uppercase transition-colors duration-300 group-hover:text-mosiadz">{f.title}</h3>
-                <p className="mt-2 max-w-[30em] text-[0.95rem] leading-relaxed font-light text-jasny-2">{f.text}</p>
-              </li>
-            ))}
-          </ul>
-          <p className="note mt-6">Szczegółowe zasady korzystania z pomostów i linii brzegowej przekażemy wraz z ofertą.</p>
-        </div>
+        <ul className="mt-[clamp(56px,7vw,100px)] grid gap-px bg-jasny/12 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
+          {FEATURES.map((f) => (
+            <li key={f.title} className="grid content-start justify-items-center gap-5 bg-smola/60 px-6 py-12 text-center backdrop-blur-[2px]">
+              <Icon name={f.icon} className="size-14 text-mosiadz" />
+              <h3 className="text-[0.95rem] font-normal tracking-[0.2em] uppercase">{f.title}</h3>
+              <p className="max-w-[24em] text-sm leading-relaxed font-light text-jasny/75">{f.text}</p>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-10 text-center text-xs tracking-[0.04em] text-jasny/65">Szczegółowe zasady korzystania z pomostów i linii brzegowej przekażemy wraz z ofertą.</p>
       </div>
     </section>
   );
@@ -268,18 +322,39 @@ export function Location() {
           </dl>
         </div>
         <div className="grid content-center gap-5 lg:col-span-6 lg:col-start-7" data-reveal>
-          <figure className="relative mx-auto w-full max-w-[620px]">
-            <Image src={images.planNoc} alt="Plan sytuacyjny inwestycji: granica terenu, 16 działek, droga wojewódzka nr 643 i Jezioro Jagodne" sizes="(min-width: 1024px) 45vw, 100vw" className="h-auto w-full" />
-            <svg viewBox={`0 0 ${PLAN_SIZE.width} ${PLAN_SIZE.height}`} aria-hidden="true" className="absolute inset-0 h-full w-full">
-              <polygon points={investmentOutline} fill="#c3a273" fillOpacity=".1" stroke="#c3a273" strokeWidth="10" />
+          <div className="border border-jasny/12 bg-smola/40 p-[clamp(16px,2.5vw,32px)]">
+            <svg viewBox="0 0 400 300" role="img" aria-labelledby="locmap-t" className="h-auto w-full">
+              <title id="locmap-t">Schemat położenia inwestycji między drogą wojewódzką nr 643 a Jeziorem Jagodnym</title>
+              <defs>
+                <pattern id="loc-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M20 0H0V20" fill="none" stroke="#f2f0eb" strokeOpacity=".06" />
+                </pattern>
+              </defs>
+              <rect width="400" height="300" fill="url(#loc-grid)" />
+              <path d="M250 300 C 270 250 300 225 340 205 C 370 190 400 185 400 185 L400 300Z" fill="#2c3a43" />
+              {[0, 1, 2].map((i) => (
+                <path key={i} d={`M${282 + i * 30} ${282 - i * 14} q12 -5 24 0 t24 0`} fill="none" stroke="#f2f0eb" strokeOpacity=".3" />
+              ))}
+              <path d="M-10 128 L 250 -10" stroke="#f2f0eb" strokeOpacity=".22" strokeWidth="12" fill="none" />
+              <path d="M-10 128 L 250 -10" stroke="#f2f0eb" strokeOpacity=".5" strokeDasharray="5 6" fill="none" />
+              <polygon points="60,150 180,80 230,130 200,160 270,225 235,245 90,170" fill="#c3a273" fillOpacity=".16" stroke="#c3a273" strokeWidth="1.4" />
+              <circle cx="252" cy="236" r="4.5" fill="#c3a273" />
+              <circle cx="252" cy="236" r="10" fill="none" stroke="#c3a273" strokeOpacity=".5" />
+              <text x="22" y="94" fontFamily="Jost, sans-serif" fontSize="8.5" letterSpacing="2" fill="#a6a29a" transform="rotate(-28 22 94)">
+                DROGA WOJEWÓDZKA NR 643
+              </text>
+              <text x="98" y="140" fontFamily="Jost, sans-serif" fontSize="11" letterSpacing="3" fill="#f2f0eb">
+                LAKE VIEW
+              </text>
+              <text x="300" y="268" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="17" fill="#f2f0eb" fontStyle="italic">
+                Jez. Jagodne
+              </text>
             </svg>
-            <figcaption className="figcap mt-4 flex justify-between gap-4">
-              <span>Plan sytuacyjny</span>
-              <span>Rys. A-01</span>
-            </figcaption>
-          </figure>
+          </div>
           <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-            <p className="note max-w-md">{investment.coordinates ? "Link prowadzi do dokładnej lokalizacji inwestycji." : "Dokładny punkt na mapie po podaniu współrzędnych inwestycji."}</p>
+            <p className="note max-w-md">
+              Schemat poglądowy, bez skali. {investment.coordinates ? "Link prowadzi do dokładnej lokalizacji inwestycji." : "Dokładny punkt na mapie po podaniu współrzędnych inwestycji."}
+            </p>
             <a className="text-link text-mosiadz" href={mapHref} target="_blank" rel="noopener noreferrer">
               Odkryj lokalizację <Arrow dir="↗" />
               <span className="sr-only">(otwiera się w nowej karcie)</span>
@@ -294,8 +369,9 @@ export function Location() {
 /* =========================== 7. ŻYCIE NAD JEZIOREM =========================== */
 function PhotoSlot({ label, className }: { label: string; className: string }) {
   return (
-    <figure className={`flex min-h-[200px] items-end bg-grafit p-6 ${className}`}>
-      <figcaption className="max-w-[20em] text-[0.62rem] font-medium tracking-[0.22em] text-jasny/55 uppercase">{label}</figcaption>
+    <figure className={`grid min-h-[200px] place-content-center gap-3 border border-dashed border-jasny/20 p-6 text-center ${className}`}>
+      <Icon name="lake" className="mx-auto size-10 text-jasny/40" />
+      <figcaption className="max-w-[18em] text-[0.64rem] font-medium tracking-[0.2em] text-jasny/60 uppercase">{label}</figcaption>
     </figure>
   );
 }
@@ -312,6 +388,7 @@ function Shot({ src, alt, caption, className, sizes, position }: { src: (typeof 
 export function LakeLife() {
   return (
     <section id="zycie" aria-labelledby="lake-h" className="band relative overflow-hidden bg-smola">
+      <WaterCanvas />
       <div className="wrap relative">
         <div className="mx-auto max-w-4xl text-center" data-reveal>
           <span className="eyebrow before:hidden">Życie nad jeziorem</span>
@@ -322,11 +399,11 @@ export function LakeLife() {
         </div>
         <div className="mt-[clamp(56px,7vw,100px)] grid grid-cols-2 gap-4 md:auto-rows-[clamp(120px,12vw,190px)] md:grid-cols-12 md:gap-5">
           <Shot src={images.wizualizacja} alt="Wizualizacja: dom typu 1a w ogrodzie, popołudniowe światło na tarasie" caption="Popołudnie w ogrodzie · wizualizacja" sizes="(min-width: 768px) 58vw, 100vw" position="70% 50%" className="col-span-2 aspect-[4/3] md:col-span-7 md:row-span-3 md:aspect-auto" />
-          <PhotoSlot label="Fotografia w przygotowaniu · poranna tafla Jeziora Jagodnego" className="md:col-span-5 md:row-span-2" />
+          <PhotoSlot label="Miejsce na fotografię: poranna tafla Jeziora Jagodnego" className="md:col-span-5 md:row-span-2" />
           <Shot src={images.detalLezaki} alt="Wizualizacja: leżaki na tarasie przed przeszklonym salonem" caption="Taras przed salonem · wizualizacja" sizes="(min-width: 768px) 42vw, 50vw" className="md:col-span-5 md:row-span-2" />
           <Shot src={images.detalTaras} alt="Wizualizacja: drewniana wanna ogrodowa na tarasie" caption="Jacuzzi ogrodowe · wizualizacja" sizes="(min-width: 768px) 34vw, 100vw" className="col-span-2 md:col-span-4 md:row-span-2" />
-          <PhotoSlot label="Fotografia w przygotowaniu · pomost" className="md:col-span-3" />
-          <PhotoSlot label="Fotografia w przygotowaniu · mazurska zieleń" className="md:col-span-3" />
+          <PhotoSlot label="Miejsce na fotografię: pomost" className="md:col-span-3" />
+          <PhotoSlot label="Miejsce na fotografię: mazurska zieleń" className="md:col-span-3" />
         </div>
       </div>
     </section>
@@ -377,7 +454,8 @@ export function Footer() {
       <div className="wrap">
         <div className="flex flex-col items-center text-center">
           <a href="#start" className="flex flex-col items-center gap-5 no-underline" aria-label="Lake View Prażmowo – początek strony">
-            <span className="text-[clamp(1.6rem,3vw,2.4rem)] font-light tracking-[0.5em] uppercase">Lake View</span>
+            <LogoMark className="size-14 text-mosiadz" />
+            <span className="text-[1.25rem] font-light tracking-[0.5em] uppercase">Lake View</span>
             <span className="-mt-3 text-[0.62rem] font-medium tracking-[0.5em] text-jasny-2 uppercase">Prażmowo · Mazury</span>
           </a>
           <p className="mt-7 max-w-md font-light text-jasny-2">Kameralna inwestycja 16 domów jednorodzinnych nad Jeziorem Jagodnym w Prażmowie, gmina Ryn.</p>
